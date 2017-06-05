@@ -1,0 +1,10 @@
+Fazer um Ident (4 arquivos + o principal)
+
+1 - Análise Léxica Flex Tabela
+	.l com o return
+2 - Análise Sintática Bison
+	.y gramática e adapitar
+3 - Árvore de Sintáxe Abstrata
+	ast.c e ast.h chamar no main
+4 - Caminhamento da Árvore (Imprimir Identado)
+	ast.c e ast.h chamar no main

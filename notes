@@ -1,0 +1,6 @@
+void yyerror (char *s);
+
+Definições YACC
+
+%union
+%start
