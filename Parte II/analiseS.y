@@ -1,10 +1,9 @@
 %union{
-  int		   intVal;
-  string*	 opVal;
-  string*	 id;
+  struct ast *a;
+  int		   numVal;
+  string*	 idVal;
 }
 
-%start programa
 %token stmt-seq
 %token stmt
 %token if-stmt
@@ -17,43 +16,53 @@
 %token <intVal> termo
 %token <intVal> fator
 
+%start programa
+
 %%
-programa : stmt-seq TSEM
 
-stmt-seq : stmt-seq TSEM stmt
-         | stmt
+programa    : stmt-seq TSEM                   ???
+;
 
-stmt     : if-stmt
-         | while-stmt
-         | assign-stmt
-         | read-stmt
-         | write-stmt
+stmt-seq    : stmt-seq TSEM stmt              {$$ = mkNode($1,';',$3);}
+            | stmt
+;
 
-if-stmt  : TIF exp THEN stmt-seq TENDIF
+stmt        : if-stmt
+            | while-stmt
+            | assign-stmt
+            | read-stmt
+            | write-stmt
+;
 
-while-stmt : TWHILE exp TDO stmt-seq TENDDO
+if-stmt     : TIF exp THEN stmt-seq TENDIF    {$$ = mkNode('I', $2, $4);}
+;
 
-assign-stmt : TID TASSIGN exp {$$ = $1 = $3;}
+while-stmt  : TWHILE exp TDO stmt-seq TENDDO  {$$ = mkFlow('W', $2, $4);}
+;
 
-read-stmt : TREAD TID {$$ = $1 $2;}
+assign-stmt : TID TASSIGN exp                 ???{$$ = mkAsgn($1,$3);}
+;
 
-write-stmt : TWRITE exp
+read-stmt   : TREAD TID                       ???{}
 
-exp : simple-exp TSMA simple-exp {$$ = $1 < $3;}
-    | simple-exp TBIG simple-exp {$$ = $1 > $3;}
-    | simple-exp TEQ simple-exp  {$$ = $1 = $3;}
-    | simple-exp
+write-stmt  : TWRITE exp                      ???{}
 
-simple-exp : simple-exp TSUM termo {$$ = $1 + $3;}
-           | simple-exp TSUB termo {$$ = $1 - $2;}
-           | termo
+exp         : simple-exp TSMA simple-exp      {$$ = mkNode($1,'<',$3);}
+            | simple-exp TBIG simple-exp      {$$ = mkNode($1,'>',$3);}
+            | simple-exp TEQ simple-exp       {$$ = mkNode($1,'=',$3);}
+            | simple-exp
+;
 
-termo : termo TMUL fator {$$ = $1 * $3;}
-      | termo TDIV fator {$$ = $1 / $3;}
-      | fator
+simple-exp  : simple-exp TSUM termo           {$$ = mkNode($1,'+',$3);}
+            | simple-exp TSUB termo           {$$ = mkNode($1,'-',$3);}
+            | termo
+;
 
-fator : TOPP exp TCLP {$$ = ( $2 )}
-      | TNUM          {$$ = $1;}
-      | TID           {$$ = $1;}
+termo       : termo TMUL fator                {$$ = mkNode($1,'*',$3);}
+            | termo TDIV fator                {$$ = mkNode($1,'/',$3);}
+            | fator
 
+fator       : TOPP exp TCLP                   ???
+            | TNUM                            ???
+            | TID                             ???
 %%
