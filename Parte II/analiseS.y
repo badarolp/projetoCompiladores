@@ -33,27 +33,27 @@ if-stmt  : TIF exp THEN stmt-seq TENDIF
 
 while-stmt : TWHILE exp TDO stmt-seq TENDDO
 
-assign-stmt : TID TASSIGN exp
+assign-stmt : TID TASSIGN exp {$$ = $1 = $3;}
 
-read-stmt : TREAD TID
+read-stmt : TREAD TID {$$ = $1 $2;}
 
 write-stmt : TWRITE exp
 
-exp : simple-exp TSMA simple-exp
-    | simple-exp TBIG simple-exp
-    | simple-exp TEQ simple-exp
+exp : simple-exp TSMA simple-exp {$$ = $1 < $3;}
+    | simple-exp TBIG simple-exp {$$ = $1 > $3;}
+    | simple-exp TEQ simple-exp  {$$ = $1 = $3;}
     | simple-exp
 
-simple-exp : simple-exp TSUM termo
-           | simple-exp TSUB termo
+simple-exp : simple-exp TSUM termo {$$ = $1 + $3;}
+           | simple-exp TSUB termo {$$ = $1 - $2;}
            | termo
 
-termo : termo TMUL fator
-      | termo TDIV fator
+termo : termo TMUL fator {$$ = $1 * $3;}
+      | termo TDIV fator {$$ = $1 / $3;}
       | fator
 
-fator : TOPP exp TCLP
-      | TNUM
-      | TID
+fator : TOPP exp TCLP {$$ = ( $2 )}
+      | TNUM          {$$ = $1;}
+      | TID           {$$ = $1;}
 
 %%

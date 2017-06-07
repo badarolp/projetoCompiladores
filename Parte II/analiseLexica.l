@@ -23,8 +23,8 @@ write               {return TWRITE;}
 "-"                 {return TSUB;}
 "/"                 {return TDIV;}
 {DIGITO}+{LETRA}+         {printf("ERRO NA LINHA %d (IDENTIFICADOR %s MAL FORMADO)\n_________________________________\n", linhaCount,yytext);}
-{DIGITO}+                 {printf("%d\t| TNUM\t\t| %s\n_________________________________\n", linhaCount, yytext);}
-{LETRA}[a-zA-Z0-9]*       {printf("%d\t| TID\t\t| %s\n_________________________________\n",linhaCount, yytext);}
+{DIGITO}+               {yylval.TNUM = atoi(yytext); return TNUM;}
+{LETRA}[a-zA-Z0-9]*     {yylval.TID = yytext[0]; return TID;}
 "("                 {return TOPP;}
 ")"                 {return TCLP;}
 ";"                 {return TSEM;}
