@@ -1,3 +1,15 @@
+/* Lucas Pinho Badaró
+ * Pedro Ribeiro
+ * indent.y
+ */
+/* Indentador com AST */
+
+%{
+#  include <stdio.h>
+#  include <stdlib.h>
+#  include "indent.h"
+%}
+
 %union{
   struct ast *a;
   int		   numVal;

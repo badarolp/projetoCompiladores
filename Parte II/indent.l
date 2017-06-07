@@ -1,5 +1,13 @@
-%{
+/* Lucas Pinho Badaró
+ * Pedro Ribeiro
+ * indent.l
+ */
+/* Reconhece tokens */
 
+%option noyywrap nodefault yylineno
+%{
+# include "indent.h"
+# include "indent.tab.h"
 %}
 
 %%
