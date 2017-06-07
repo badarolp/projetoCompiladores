@@ -4,6 +4,8 @@
  */
 /* Indentador com AST */
 
+void yyerror (char *s);
+
 %{
 #  include <stdio.h>
 #  include <stdlib.h>
@@ -78,3 +80,13 @@ fator       : TOPP exp TCLP                   ???
             | TNUM                            ???
             | TID                             ???
 %%
+
+/* Código em C */
+
+int funcoesAqui() {
+	return 0;
+}
+
+int main (void) {
+	return yyparse();
+}

@@ -43,3 +43,5 @@ write               { return TWRITE;}
 .                   { yyerror("ERRO NA LINHA: %d SÍMBOLO %s DESCONHECIDO\n_________________________________\n",linhaCount,yytext);}
 
 %%
+
+int yywrap (void) {return 1;}

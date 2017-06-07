@@ -1,1 +1,77 @@
-Projeto de Compiladores
+Projeto de Compiladores- Indent (4 arquivos + o principal)
+
+1 - Análise Léxica Flex Tabela
+	.l com o return
+2 - Análise Sintática Bison
+	.y gramática e adapitar
+3 - Árvore de Sintáxe Abstrata
+	ast.c e ast.h chamar no main
+4 - Caminhamento da Árvore (Imprimir Identado)
+	ast.c e ast.h chamar no main
+
+
+
+
+Linguagem T (Gramática Livre de Contexto)
+
+  <programa> ::= <stmt-seq> ;
+  <stmt-seq> ::= <stmt-seq> ; <stmt>
+  <stmt-seq> ::= <stmt>
+  <stmt> ::= <if-stmt> | <while-stmt> | <assign-stmt> | <read-stmt> | <write-stmt>
+  <if-stmt> ::= if <exp> then <stmt-seq> endif
+  <while-stmt> ::= while <exp> do <stmt-seq> enddo
+  <assign-stmt> ::= ID := <exp>
+  <read-stmt> ::= read ID
+  <write-stmt> ::= write <exp>
+  <exp> ::= <simple-exp> < <simple-exp> |
+  	  <simple-exp> > <simple-exp> |
+  	  <simple-exp> = <simple-exp> |
+  	  <simple-exp>
+  <simple-exp> ::= <simple-exp> + <termo> |
+  		 <simple-exp> - <termo> |
+  		 <termo>
+  <termo> ::= <termo> * <fator> |
+  	    <termo> / <fator> |
+  	    <fator>
+  <fator> ::= (<exp>) | NUM | ID
+
+  TIF:if
+  THEN:then
+  TENDIF:endif
+  TWHILE:while
+  TDO:do
+  TENDDO:enddo
+  TREAD:read
+  TWRITE:write
+  TSMA:<
+  TBIG:>
+  TEQ:=
+  TSUM:+
+  TSUB:-
+  TMUL:*
+  TDIV:/
+  TASSIGN::=
+  TSEM:;
+  TOPP:(
+  TCLP:)
+
+
+  TID:l(l|d)*
+  TNUM:dd*
+
+
+
+
+
+
+
+/*
+
+void yyerror (char *s);
+
+Definições YACC
+
+%union
+%start
+
+*/
