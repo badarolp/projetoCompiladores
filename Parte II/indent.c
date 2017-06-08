@@ -17,64 +17,92 @@ void indent(struct ast *a) {
 
   switch(a->nodetype) {
 
-    /* stmt-seq TSEM */
+    /* stmt-seq TSEM stmt */
     case ';':
-      //
+      //ident(l)
+      //print ";\n"
+      //ident(r)
       break;
 
     /* TIF exp TTHEN stmt-seq TENDIF */
     case 'I':
-      //
+      //print "if"
+      //ident(l)
+      //print "then\n"
+      //ident(r)
+      //print "endif\n"
       break;
 
     /* TWHILE exp TDO stmt-seq TENDDO */
     case 'W':
-      //
+      //print "while"
+      //ident(l)
+      //print "do\n"
+      //ident(r)
+      //print "enddo\n"
       break;
 
     /* TID TASSIGN exp */
     case 'A':
-      //
+      //ident(l)
+      //print(":=")
+      //ident(r)
       break;
 
     /* simple-exp TSMA simple-exp */
     case '<':
-      //
+      //ident(l)
+      //print(">")
+      //ident(r)
       break;
 
     /* simple-exp TBIG simple-exp */
     case '>':
-      //
+      //ident(l)
+      //print(">")
+      //ident(r)
       break;
 
     /* simple-exp TEQ simple-exp */
     case '=':
-      //
+      //ident(l)
+      //print("=")
+      //ident(r)
       break;
 
     /* simple-exp TSUM termo */
     case '+':
-      //
+      //ident(l)
+      //print("+")
+      //ident(r)
       break;
 
     /* simple-exp TSUB termo */
     case '-':
-      //
+      //ident(l)
+      //print("-")
+      //ident(r)
       break;
 
     /* simple-exp TMUL fator */
-    case '+':
-      //
+    case '*':
+      //ident(l)
+      //print("*")
+      //ident(r)
       break;
 
     /* simple-exp TDIV fator */
     case '/':
-      //
+      //ident(l)
+      //print("/")
+      //ident(r)
       break;
 
     /* TOPP exp TCLP */
     case 'P':
-      //
+      //print("(")
+      //ident(l)
+      //print(")")
       break;
 
 
@@ -354,7 +382,7 @@ dumpast(struct ast *a, int level)
   }
 }
 
-struct ast * newast(int nodetype, struct ast *l, struct ast *r) {
+struct ast * mkNode(struct ast *l, int nodetype, struct ast *r) {
 
   struct ast *a = malloc(sizeof(struct ast));
 
@@ -368,22 +396,6 @@ struct ast * newast(int nodetype, struct ast *l, struct ast *r) {
   a->r = r;
 
   return a;
-}
-
-struct ast * newflow(int nodetype, struct ast *cond, struct ast *tl {
-
-  struct flow *a = malloc(sizeof(struct flow));
-
-  if(!a) {
-    yyerror("out of space");
-    exit(0);
-  }
-
-  a->nodetype = nodetype;
-  a->cond = cond;
-  a->tl = tl;
-
-  return (struct ast *)a;
 }
 
 void treefree(struct ast *a) {
