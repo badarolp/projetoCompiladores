@@ -9,100 +9,180 @@
 #  include <stdarg.h>
 #  include <string.h>
 #  include <math.h>
-#  include "ident.h"
+#  include "indent.h"
 
-void indent(struct ast *a) {
+const char * indent(struct ast *a) {
+
+  char * strLL = "";
+  char * strRR = "";
+  char * strLeft = "";
+  char * strRight = "";
+  char * strRoot = ""
+  char * strReturn = "";
+
   if(!a)
     yyerror("internal error, null eval");
 
   switch(a->nodetype) {
 
+    /* programa */
+
+    /* stmt-seq */
+
     /* stmt-seq TSEM stmt */
     case ';':
-      //ident(l)
-      //print ";\n"
-      //ident(r)
+      strL = indent(a->l);
+      strRoot = " ; ";
+      strR = indent(a->r);
+      strcat(strReturn, strLeft);
+      strcat(strReturn, strRoot);
+      strcat(strReturn, strRight);
       break;
 
     /* TIF exp TTHEN stmt-seq TENDIF */
     case 'I':
-      //print "if"
-      //ident(l)
-      //print "then\n"
-      //ident(r)
-      //print "endif\n"
+      strLL = "if ";
+      strL = indent(a->l);
+      strRoot = " then\n";
+      strR = indent(a->r);
+      strRR = " tendif\n";
+      strcat(strReturn, strLL);
+      strcat(strReturn, strLeft);
+      strcat(strReturn, strRoot);
+      strcat(strReturn, strRight);
+      strcat(strReturn, strRR);
       break;
 
     /* TWHILE exp TDO stmt-seq TENDDO */
     case 'W':
-      //print "while"
-      //ident(l)
-      //print "do\n"
-      //ident(r)
-      //print "enddo\n"
+      strLL = "while ";
+      strLeft = indent(a->l);
+      strRoot = " do\n";
+      strRight = indent(a->r);
+      strRR = " enddo\n";
+      strcat(strReturn, strLL);
+      strcat(strReturn, strLeft);
+      strcat(strReturn, strRoot);
+      strcat(strReturn, strRight);
+      strcat(strReturn, strRR);
       break;
+
+
+    /* read-stmt */
+
+    /* TREAD TID */
+    case 'R':
+      strLeft = "read ";
+      strRight = indent(a->l);
+      strcat(strReturn, strLeft);
+      strcat(strReturn, strRight);
+      break;
+
+
+    /* write-stmt */
+
+    /* TWRITE exp */
+    case 'W':
+      strLeft = "write ";
+      strRight = indent(a->l);
+      strcat(strReturn, strLeft);
+      strcat(strReturn, strRight);
+      break;
+
+
+    /* assign-stmt */
 
     /* TID TASSIGN exp */
     case 'A':
-      //ident(l)
-      //print(":=")
-      //ident(r)
+      strLeft = indent(a->l);
+      strRoot = " := ";
+      strRight = indent(a->r);
+      strcat(strReturn, strLeft);
+      strcat(strReturn, strRoot);
+      strcat(strReturn, strRight);
       break;
+
+
+    /* exp */
 
     /* simple-exp TSMA simple-exp */
     case '<':
-      //ident(l)
-      //print(">")
-      //ident(r)
+      strLeft = indent(a->l);
+      strRoot = " < ";
+      strRight = indent(a->r);
+      strcat(strReturn, strLeft);
+      strcat(strReturn, strRoot);
+      strcat(strReturn, strRight);
       break;
 
     /* simple-exp TBIG simple-exp */
     case '>':
-      //ident(l)
-      //print(">")
-      //ident(r)
+      strLeft = indent(a->l);
+      strRoot = " > ";
+      strRight = indent(a->r);
+      strcat(strReturn, strLeft);
+      strcat(strReturn, strRoot);
+      strcat(strReturn, strRight);
       break;
 
     /* simple-exp TEQ simple-exp */
     case '=':
-      //ident(l)
-      //print("=")
-      //ident(r)
+      strLeft = indent(a->l);
+      strRoot = " = ";
+      strRight = indent(a->r);
+      strcat(strReturn, strLeft);
+      strcat(strReturn, strRoot);
+      strcat(strReturn, strRight);
       break;
 
     /* simple-exp TSUM termo */
     case '+':
-      //ident(l)
-      //print("+")
-      //ident(r)
+      strLeft = indent(a->l);
+      strRoot = " + ";
+      strRight = indent(a->r);
+      strcat(strReturn, strLeft);
+      strcat(strReturn, strRoot);
+      strcat(strReturn, strRight);
       break;
 
     /* simple-exp TSUB termo */
     case '-':
-      //ident(l)
-      //print("-")
-      //ident(r)
+      strLeft = indent(a->l);
+      strRoot = " - ";
+      strRight = indent(a->r);
+      strcat(strReturn, strLeft);
+      strcat(strReturn, strRoot);
+      strcat(strReturn, strRight);
       break;
 
     /* simple-exp TMUL fator */
     case '*':
-      //ident(l)
-      //print("*")
-      //ident(r)
+      strLeft = indent(a->l);
+      strRoot = " * ";
+      strRight = indent(a->r);
+      strcat(strReturn, strLeft);
+      strcat(strReturn, strRoot);
+      strcat(strReturn, strRight);
       break;
 
     /* simple-exp TDIV fator */
     case '/':
-      //ident(l)
-      //print("/")
-      //ident(r)
+      strLeft = indent(a->l);
+      strRoot = " / ";
+      strRight = indent(a->r);
+      strcat(strReturn, strLeft);
+      strcat(strReturn, strRoot);
+      strcat(strReturn, strRight);
       break;
 
     /* TOPP exp TCLP */
     case 'P':
-      //print("(")
-      //ident(l)
-      //print(")")
+      strLeft = "(";
+      strRoot = indent(a->l);
+      strRight = ")";
+      strcat(strReturn, strLeft);
+      strcat(strReturn, strRoot);
+      strcat(strReturn, strRight);
       break;
 
 

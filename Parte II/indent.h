@@ -4,6 +4,10 @@
  */
 /* Declarações */
 
+#define APrograma 0
+#define AStmtSeq 1
+...
+
 struct ast {
   int nodetype;
   struct ast *l;

@@ -40,7 +40,8 @@ programa    : stmt-seq                        {
                                               }
 ;
 
-stmt-seq    : stmt-seq TSEM stmt              {$$ = mkNode($1,';',$3);}
+stmt-seq    : stmt-seq TSEM stmt-seq          {$$ = mkNode($1,';',$3);}
+            | stmt-seq TSEM
             | stmt
 ;
 
@@ -51,10 +52,10 @@ stmt        : if-stmt
             | write-stmt
 ;
 
-if-stmt     : TIF exp TTHEN stmt-seq TENDIF    {$$ = mkFlow('I', $2, $4);}
+if-stmt     : TIF exp TTHEN stmt-seq TENDIF    {$$ = mkNode($2, "I", $4);}
 ;
 
-while-stmt  : TWHILE exp TDO stmt-seq TENDDO  {$$ = mkFlow('W', $2, $4);}
+while-stmt  : TWHILE exp TDO stmt-seq TENDDO  {$$ = mkNode($2, "W", $4);}
 ;
 
 assign-stmt : TID TASSIGN exp                 {$$ = mkNode($1,'A',$3);}
@@ -62,7 +63,7 @@ assign-stmt : TID TASSIGN exp                 {$$ = mkNode($1,'A',$3);}
 
 read-stmt   : TREAD TID                       {$$ = mkNode($2,'R');}
 
-write-stmt  : TWRITE exp                      ???{}
+write-stmt  : TWRITE exp                      {$$ = mkNode($2,'W');}
 
 exp         : simple-exp TSMA simple-exp      {$$ = mkNode($1,'<',$3);}
             | simple-exp TBIG simple-exp      {$$ = mkNode($1,'>',$3);}
