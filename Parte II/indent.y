@@ -25,6 +25,7 @@ void yyerror (char *s);
 %token assign-stmt
 %token read-stmt
 %token write-stmt
+
 %token <intVal> exp
 %token <intVal> simple-exp
 %token <intVal> termo
