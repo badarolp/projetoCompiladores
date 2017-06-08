@@ -8,7 +8,13 @@
 %{
 # include "indent.h"
 # include "indent.tab.h"
+int linhaCount = 1;
 %}
+%x comentario
+
+LINHA       \n
+DIGITO      [0-9]
+LETRA       [a-zA-Z]
 
 %%
 
