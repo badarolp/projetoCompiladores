@@ -37,12 +37,11 @@ void yyerror (char *s);
 
 programa    : stmt-seq                        {
                                               indent($1);
-                                              treefree($2);
+                                              treefree($1);
                                               }
 ;
 
-stmt-seq    : stmt-seq TSEM stmt-seq          {$$ = mkNode($1,';',$3);}
-            | stmt-seq TSEM
+stmt-seq    : stmt-seq TSEM stmt          {$$ = mkNode($1,';',$3);}
             | stmt
 ;
 
@@ -53,7 +52,7 @@ stmt        : if-stmt
             | write-stmt
 ;
 
-if-stmt     : TIF exp TTHEN stmt-seq TENDIF    {$$ = mkNode($2, "I", $4);}
+if-stmt     : TIF exp TTHEN stmt-seq TENDIF   {$$ = mkNode($2, "I", $4);}
 ;
 
 while-stmt  : TWHILE exp TDO stmt-seq TENDDO  {$$ = mkNode($2, "W", $4);}
@@ -62,9 +61,9 @@ while-stmt  : TWHILE exp TDO stmt-seq TENDDO  {$$ = mkNode($2, "W", $4);}
 assign-stmt : TID TASSIGN exp                 {$$ = mkNode($1,'A',$3);}
 ;
 
-read-stmt   : TREAD TID                       {$$ = mkNode($2,'R');}
+read-stmt   : TREAD TID                       {$$ = mkNode($2,'R', NULL);}
 
-write-stmt  : TWRITE exp                      {$$ = mkNode($2,'W');}
+write-stmt  : TWRITE exp                      {$$ = mkNode($2,'W', NULL);}
 
 exp         : simple-exp TSMA simple-exp      {$$ = mkNode($1,'<',$3);}
             | simple-exp TBIG simple-exp      {$$ = mkNode($1,'>',$3);}
@@ -82,9 +81,9 @@ termo       : termo TMUL fator                {$$ = mkNode($1,'*',$3);}
             | fator
 ;
 
-fator       : TOPP exp TCLP                   {$$ = mkNode($2,'P');}
-            | TNUM                            ???
-            | TID                             ???
+fator       : TOPP exp TCLP                   {$$ = mkNode($2,'P', NULL);}
+            | TNUM                            {$$ = mkNode($1,'NUM', NULL);}
+            | TID                             {$$ = mkNode($1,'ID', NULL);}
 ;
 
 %%

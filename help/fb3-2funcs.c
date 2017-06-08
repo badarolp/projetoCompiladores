@@ -57,7 +57,7 @@ struct ast *
 newast(int nodetype, struct ast *l, struct ast *r)
 {
   struct ast *a = malloc(sizeof(struct ast));
-  
+
   if(!a) {
     yyerror("out of space");
     exit(0);
@@ -72,7 +72,7 @@ struct ast *
 newnum(double d)
 {
   struct numval *a = malloc(sizeof(struct numval));
-  
+
   if(!a) {
     yyerror("out of space");
     exit(0);
@@ -86,7 +86,7 @@ struct ast *
 newcmp(int cmptype, struct ast *l, struct ast *r)
 {
   struct ast *a = malloc(sizeof(struct ast));
-  
+
   if(!a) {
     yyerror("out of space");
     exit(0);
@@ -101,7 +101,7 @@ struct ast *
 newfunc(int functype, struct ast *l)
 {
   struct fncall *a = malloc(sizeof(struct fncall));
-  
+
   if(!a) {
     yyerror("out of space");
     exit(0);
@@ -116,7 +116,7 @@ struct ast *
 newcall(struct symbol *s, struct ast *l)
 {
   struct ufncall *a = malloc(sizeof(struct ufncall));
-  
+
   if(!a) {
     yyerror("out of space");
     exit(0);
@@ -131,7 +131,7 @@ struct ast *
 newref(struct symbol *s)
 {
   struct symref *a = malloc(sizeof(struct symref));
-  
+
   if(!a) {
     yyerror("out of space");
     exit(0);
@@ -145,7 +145,7 @@ struct ast *
 newasgn(struct symbol *s, struct ast *v)
 {
   struct symasgn *a = malloc(sizeof(struct symasgn));
-  
+
   if(!a) {
     yyerror("out of space");
     exit(0);
@@ -160,7 +160,7 @@ struct ast *
 newflow(int nodetype, struct ast *cond, struct ast *tl, struct ast *el)
 {
   struct flow *a = malloc(sizeof(struct flow));
-  
+
   if(!a) {
     yyerror("out of space");
     exit(0);
@@ -176,7 +176,7 @@ struct symlist *
 newsymlist(struct symbol *sym, struct symlist *next)
 {
   struct symlist *sl = malloc(sizeof(struct symlist));
-  
+
   if(!sl) {
     yyerror("out of space");
     exit(0);
@@ -250,7 +250,7 @@ eval(struct ast *a)
 
   /* control flow */
   /* null if/else/do expressions allowed in the grammar, so check for them */
-  case 'I': 
+  case 'I':
     if( eval( ((struct flow *)a)->cond) != 0) {
       if( ((struct flow *)a)->tl) {
 	v = eval( ((struct flow *)a)->tl);
@@ -266,13 +266,13 @@ eval(struct ast *a)
 
   case 'W':
     v = 0.0;		/* a default value */
-    
+
     if( ((struct flow *)a)->tl) {
       while( eval(((struct flow *)a)->cond) != 0)
 	v = eval(((struct flow *)a)->tl);
     }
     break;			/* last value is value */
-	              
+
   case 'L': eval(a->l); v = eval(a->r); break;
 
   case 'F': v = callbuiltin((struct fncall *)a); break;
@@ -333,7 +333,7 @@ calluser(struct ufncall *f)
   if(!oldval || !newval) {
     yyerror("Out of space in %s", fn->name); return 0.0;
   }
-  
+
   /* evaluate the arguments */
   for(i = 0; i < nargs; i++) {
     if(!args) {
@@ -350,7 +350,7 @@ calluser(struct ufncall *f)
       args = NULL;
     }
   }
-		     
+
   /* save old values of dummies, assign new ones */
   sl = fn->syms;
   for(i = 0; i < nargs; i++) {
@@ -414,8 +414,8 @@ treefree(struct ast *a)
     break;
 
   default: printf("internal error: free bad node %c\n", a->nodetype);
-  }	  
-  
+  }
+
   free(a); /* always free the node itself */
 
 }
@@ -434,7 +434,7 @@ yyerror(char *s, ...)
 int
 main()
 {
-  printf("> "); 
+  printf("> ");
   return yyparse();
 }
 
@@ -466,13 +466,13 @@ dumpast(struct ast *a, int level)
     /* expressions */
   case '+': case '-': case '*': case '/': case 'L':
   case '1': case '2': case '3':
-  case '4': case '5': case '6': 
+  case '4': case '5': case '6':
     printf("binop %c\n", a->nodetype);
     dumpast(a->l, level);
     dumpast(a->r, level);
     return;
 
-  case '|': case 'M': 
+  case '|': case 'M':
     printf("unop %c\n", a->nodetype);
     dumpast(a->l, level);
     return;
@@ -485,7 +485,7 @@ dumpast(struct ast *a, int level)
     if( ((struct flow *)a)->el)
       dumpast( ((struct flow *)a)->el, level);
     return;
-	              
+
   case 'F':
     printf("builtin %d\n", ((struct fncall *)a)->functype);
     dumpast(a->l, level);
