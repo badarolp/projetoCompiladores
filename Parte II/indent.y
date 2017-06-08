@@ -34,7 +34,7 @@ void yyerror (char *s);
 
 %%
 
-programa    : stmt-seq TSEM                   {
+programa    : stmt-seq                        {
                                               indent($1);
                                               treefree($2);
                                               }
@@ -51,16 +51,16 @@ stmt        : if-stmt
             | write-stmt
 ;
 
-if-stmt     : TIF exp THEN stmt-seq TENDIF    {$$ = mkFlow('I', $2, $4);}
+if-stmt     : TIF exp TTHEN stmt-seq TENDIF    {$$ = mkFlow('I', $2, $4);}
 ;
 
 while-stmt  : TWHILE exp TDO stmt-seq TENDDO  {$$ = mkFlow('W', $2, $4);}
 ;
 
-assign-stmt : TID TASSIGN exp                 ???{$$ = mkAsgn($1,$3);}
+assign-stmt : TID TASSIGN exp                 {$$ = mkNode($1,'A',$3);}
 ;
 
-read-stmt   : TREAD TID                       ???{}
+read-stmt   : TREAD TID                       {$$ = mkNode($2,'R');}
 
 write-stmt  : TWRITE exp                      ???{}
 
@@ -78,10 +78,13 @@ simple-exp  : simple-exp TSUM termo           {$$ = mkNode($1,'+',$3);}
 termo       : termo TMUL fator                {$$ = mkNode($1,'*',$3);}
             | termo TDIV fator                {$$ = mkNode($1,'/',$3);}
             | fator
+;
 
-fator       : TOPP exp TCLP                   ???
+fator       : TOPP exp TCLP                   {$$ = mkNode($2,'P');}
             | TNUM                            ???
             | TID                             ???
+;
+
 %%
 
 /* Código em C */
