@@ -13,10 +13,12 @@
 
 struct ast * mkNode(struct ast *l, int nodetype, struct ast *r) {
   struct ast *a = malloc(sizeof(struct ast));
+  /*
   if(!a) {
     yyerror("out of space");
     exit(0);
   }
+  */
   a->nodetype = nodetype;
   a->l = l;
   a->r = r;
@@ -25,10 +27,12 @@ struct ast * mkNode(struct ast *l, int nodetype, struct ast *r) {
 
 struct ast * mkNum(int value) {
   struct numNode *a = malloc(sizeof(struct numNode));
+  /*
   if(!a) {
     yyerror("out of space");
     exit(0);
   }
+  */
   a->nodetype = ANum;
   a->value = value;
   return (struct ast *)a;
@@ -36,10 +40,10 @@ struct ast * mkNum(int value) {
 
 struct ast * mkId(char * nome) {
   struct idNode *a = malloc(sizeof(struct idNode));
-  if(!a) {
-    yyerror("out of space");
-    exit(0);
-  }
+  //if(!a) {
+  //  yyerror("out of space");
+  //  exit(0);
+  //}
   a->nodetype = AId;
   a->nome = nome;
   return (struct ast *)a;
@@ -54,8 +58,8 @@ const char * indent(struct ast *a) {
   char * strRoot = ""
   char * strReturn = "";
 
-  if(!a)
-    yyerror("internal error, null eval");
+  //if(!a)
+  //  yyerror("internal error, null eval");
 
   switch(a->nodetype) {
 
@@ -247,6 +251,7 @@ void treefree(struct ast *a) {
   //
 }
 
+/*
 void yyerror(char *s, ...) {
   va_list ap;
   va_start(ap, s);
@@ -255,6 +260,7 @@ void yyerror(char *s, ...) {
   vfprintf(stderr, s, ap);
   fprintf(stderr, "\n");
 }
+*/
 
 int main() {
   return yyparse();

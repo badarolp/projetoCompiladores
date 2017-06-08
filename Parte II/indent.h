@@ -43,5 +43,5 @@ const char * indent(struct ast *a);
 void treefree(struct ast *);
 
 /* interface to the lexer */
-extern int yylineno; /* from lexer */
-void yyerror(char *s, ...);
+//extern int yylineno; /* from lexer */
+//void yyerror(char *s, ...);

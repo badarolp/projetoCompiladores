@@ -4,8 +4,6 @@
  */
 /* Indentador com AST */
 
-void yyerror (char *s);
-
 %{
 #  include <stdio.h>
 #  include <stdlib.h>
