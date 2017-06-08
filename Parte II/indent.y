@@ -34,7 +34,10 @@ void yyerror (char *s);
 
 %%
 
-programa    : stmt-seq TSEM                   ???
+programa    : stmt-seq TSEM                   {
+                                              indent($1);
+                                              treefree($2);
+                                              }
 ;
 
 stmt-seq    : stmt-seq TSEM stmt              {$$ = mkNode($1,';',$3);}
@@ -48,7 +51,7 @@ stmt        : if-stmt
             | write-stmt
 ;
 
-if-stmt     : TIF exp THEN stmt-seq TENDIF    {$$ = mkNode('I', $2, $4);}
+if-stmt     : TIF exp THEN stmt-seq TENDIF    {$$ = mkFlow('I', $2, $4);}
 ;
 
 while-stmt  : TWHILE exp TDO stmt-seq TENDDO  {$$ = mkFlow('W', $2, $4);}
