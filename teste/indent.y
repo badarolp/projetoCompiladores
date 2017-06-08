@@ -12,6 +12,7 @@
 
 %union {int num; char id;}         /* Definições dp yacc */
 %start programa
+%token TFIM
 %token TIF
 %token TTHEN
 %token TENDIF
@@ -37,11 +38,11 @@
 
 %%
 
-programa    : stmt-seq                        {printf("programa    : stmt-seq\n");}
+programa    : stmt-seq TFIM                   {printf("programa    : stmt-seq\n");}
 ;
 
 stmt-seq    : stmt-seq TSEM stmt          		{printf("stmt-seq    : stmt-seq TSEM stmt\n");}
-            | stmt														{printf("stmt\n");}
+            | stmt														{printf("stmt-seq    : stmt\n");}
 ;
 
 stmt        : if-stmt													{printf("stmt        : if-stmt\n");}
@@ -61,8 +62,10 @@ assign-stmt : TID TASSIGN exp                 {printf("assign-stmt : TID TASSIGN
 ;
 
 read-stmt   : TREAD TID                       {printf("read-stmt   : TREAD TID\n");}
+;
 
 write-stmt  : TWRITE exp                      {printf("write-stmt  : TWRITE exp\n");}
+;
 
 exp         : simple-exp TSMA simple-exp      {printf("exp         : simple-exp TSMA simple-exp\n");}
             | simple-exp TBIG simple-exp      {printf("exp         : simple-exp TBIG simple-exp\n");}
@@ -75,14 +78,14 @@ simple-exp  : simple-exp TSUM termo           {printf("simple-exp  : simple-exp 
             | termo														{printf("simple-exp  : termo\n");}
 ;
 
-termo       : termo TMUL fator                {printf("\n");}
-            | termo TDIV fator                {printf("\n");}
-            | fator														{printf("\n");}
+termo       : termo TMUL fator                {printf("termo       : termo TMUL fator\n");}
+            | termo TDIV fator                {printf("termo       : termo TDIV fator\n");}
+            | fator														{printf("termo       : fator\n");}
 ;
 
-fator       : TOPP exp TCLP                   {printf("\n");}
-            | TNUM                            {printf("\n");}
-            | TID                             {printf("\n");}
+fator       : TOPP exp TCLP                   {printf("fator       : TOPP exp TCLP\n");}
+            | TNUM                            {printf("fator       : TNUM\n");}
+            | TID                             {printf("fator       : TID\n");}
 ;
 
 %%

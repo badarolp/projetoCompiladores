@@ -103,28 +103,29 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    TIF = 258,
-    TTHEN = 259,
-    TENDIF = 260,
-    TWHILE = 261,
-    TENDWHILE = 262,
-    TDO = 263,
-    TENDDO = 264,
-    TREAD = 265,
-    TWRITE = 266,
-    TSUM = 267,
-    TMUL = 268,
-    TSUB = 269,
-    TDIV = 270,
-    TOPP = 271,
-    TCLP = 272,
-    TSEM = 273,
-    TEQ = 274,
-    TASSIGN = 275,
-    TSMA = 276,
-    TBIG = 277,
-    TNUM = 278,
-    TID = 279
+    TFIM = 258,
+    TIF = 259,
+    TTHEN = 260,
+    TENDIF = 261,
+    TWHILE = 262,
+    TENDWHILE = 263,
+    TDO = 264,
+    TENDDO = 265,
+    TREAD = 266,
+    TWRITE = 267,
+    TSUM = 268,
+    TMUL = 269,
+    TSUB = 270,
+    TDIV = 271,
+    TOPP = 272,
+    TCLP = 273,
+    TSEM = 274,
+    TEQ = 275,
+    TASSIGN = 276,
+    TSMA = 277,
+    TBIG = 278,
+    TNUM = 279,
+    TID = 280
   };
 #endif
 
@@ -136,7 +137,7 @@ union YYSTYPE
 #line 13 "indent.y" /* yacc.c:355  */
 int num; char id;
 
-#line 140 "indent.tab.c" /* yacc.c:355  */
+#line 141 "indent.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -153,7 +154,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 157 "indent.tab.c" /* yacc.c:358  */
+#line 158 "indent.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -395,21 +396,21 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  25
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   41
+#define YYLAST   43
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  25
+#define YYNTOKENS  26
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  13
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  27
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  51
+#define YYNSTATES  52
 
 /* YYTRANSLATE[YYX] -- Symbol number corresponding to YYX as returned
    by yylex, with out-of-bounds checking.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   279
+#define YYMAXUTOK   280
 
 #define YYTRANSLATE(YYX)                                                \
   ((unsigned int) (YYX) <= YYMAXUTOK ? yytranslate[YYX] : YYUNDEFTOK)
@@ -445,16 +446,17 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
        5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
-      15,    16,    17,    18,    19,    20,    21,    22,    23,    24
+      15,    16,    17,    18,    19,    20,    21,    22,    23,    24,
+      25
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    40,    40,    43,    44,    47,    48,    49,    50,    51,
-      54,    57,    60,    63,    65,    67,    68,    69,    70,    73,
-      74,    75,    78,    79,    80,    83,    84,    85
+       0,    41,    41,    44,    45,    48,    49,    50,    51,    52,
+      55,    58,    61,    64,    67,    70,    71,    72,    73,    76,
+      77,    78,    81,    82,    83,    86,    87,    88
 };
 #endif
 
@@ -463,11 +465,11 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "TIF", "TTHEN", "TENDIF", "TWHILE",
-  "TENDWHILE", "TDO", "TENDDO", "TREAD", "TWRITE", "TSUM", "TMUL", "TSUB",
-  "TDIV", "TOPP", "TCLP", "TSEM", "TEQ", "TASSIGN", "TSMA", "TBIG", "TNUM",
-  "TID", "$accept", "programa", "stmt-seq", "stmt", "if-stmt",
-  "while-stmt", "assign-stmt", "read-stmt", "write-stmt", "exp",
+  "$end", "error", "$undefined", "TFIM", "TIF", "TTHEN", "TENDIF",
+  "TWHILE", "TENDWHILE", "TDO", "TENDDO", "TREAD", "TWRITE", "TSUM",
+  "TMUL", "TSUB", "TDIV", "TOPP", "TCLP", "TSEM", "TEQ", "TASSIGN", "TSMA",
+  "TBIG", "TNUM", "TID", "$accept", "programa", "stmt-seq", "stmt",
+  "if-stmt", "while-stmt", "assign-stmt", "read-stmt", "write-stmt", "exp",
   "simple-exp", "termo", "fator", YY_NULLPTR
 };
 #endif
@@ -479,14 +481,14 @@ static const yytype_uint16 yytoknum[] =
 {
        0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
      265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
-     275,   276,   277,   278,   279
+     275,   276,   277,   278,   279,   280
 };
 # endif
 
-#define YYPACT_NINF -27
+#define YYPACT_NINF -26
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-27)))
+  (!!((Yystate) == (-26)))
 
 #define YYTABLE_NINF -1
 
@@ -497,12 +499,12 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-       0,     5,     5,   -19,     5,    -3,    27,    19,   -27,   -27,
-     -27,   -27,   -27,   -27,     5,   -27,   -27,    34,     4,    20,
-     -27,    31,   -27,   -27,     5,   -27,     0,    23,     0,     5,
-       5,     5,     5,     5,     5,     5,     0,   -27,   -27,   -27,
-      -4,    20,    20,    22,    22,    22,   -27,   -27,    -5,   -27,
-     -27
+      -1,    10,    10,    -4,    10,    17,    30,     1,   -26,   -26,
+     -26,   -26,   -26,   -26,    10,   -26,   -26,    34,     3,    15,
+     -26,    31,   -26,   -26,    10,   -26,   -26,    -1,    23,    -1,
+      10,    10,    10,    10,    10,    10,    10,    -1,   -26,   -26,
+     -26,    -5,    15,    15,     2,     2,     2,   -26,   -26,     9,
+     -26,   -26
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -510,19 +512,19 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     0,     0,     0,     0,     0,     0,     2,     4,     5,
+       0,     0,     0,     0,     0,     0,     0,     0,     4,     5,
        6,     7,     8,     9,     0,    26,    27,     0,    18,    21,
-      24,     0,    13,    14,     0,     1,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,    12,     3,    25,
-       0,    19,    20,    17,    15,    16,    22,    23,     0,    10,
-      11
+      24,     0,    13,    14,     0,     1,     2,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     0,     0,    12,     3,
+      25,     0,    19,    20,    17,    15,    16,    22,    23,     0,
+      10,    11
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -27,   -27,   -21,    15,   -27,   -27,   -27,   -27,   -27,    -2,
-      -1,   -10,   -26
+     -26,   -26,   -24,    16,   -26,   -26,   -26,   -26,   -26,    -2,
+     -25,     6,    -3
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -537,46 +539,46 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-      21,    49,    23,     1,    50,    22,     2,    40,    46,    47,
-       3,     4,    27,    26,    26,    48,    29,    24,    30,    41,
-      42,    14,    37,    31,     5,    32,    33,    25,    15,    16,
-      43,    44,    45,    34,    29,    35,    30,    26,    28,    36,
-      39,    38
+      21,    50,    23,     1,    26,    41,     2,    44,    45,    46,
+       3,     4,    28,    49,    27,    30,    30,    31,    31,    51,
+      27,    22,    38,    32,     5,    33,    34,    14,    27,    35,
+      25,    36,    47,    48,    15,    16,    42,    43,    24,    29,
+      37,    40,     0,    39
 };
 
-static const yytype_uint8 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
-       2,     5,     4,     3,     9,    24,     6,    28,    34,    35,
-      10,    11,    14,    18,    18,    36,    12,    20,    14,    29,
-      30,    16,    24,    19,    24,    21,    22,     0,    23,    24,
-      31,    32,    33,    13,    12,    15,    14,    18,     4,     8,
-      17,    26
+       2,     6,     4,     4,     3,    29,     7,    32,    33,    34,
+      11,    12,    14,    37,    19,    13,    13,    15,    15,    10,
+      19,    25,    24,    20,    25,    22,    23,    17,    19,    14,
+       0,    16,    35,    36,    24,    25,    30,    31,    21,     5,
+       9,    18,    -1,    27
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,     6,    10,    11,    24,    26,    27,    28,    29,
-      30,    31,    32,    33,    16,    23,    24,    34,    35,    36,
-      37,    34,    24,    34,    20,     0,    18,    34,     4,    12,
-      14,    19,    21,    22,    13,    15,     8,    34,    28,    17,
-      27,    36,    36,    35,    35,    35,    37,    37,    27,     5,
-       9
+       0,     4,     7,    11,    12,    25,    27,    28,    29,    30,
+      31,    32,    33,    34,    17,    24,    25,    35,    36,    37,
+      38,    35,    25,    35,    21,     0,     3,    19,    35,     5,
+      13,    15,    20,    22,    23,    14,    16,     9,    35,    29,
+      18,    28,    37,    37,    36,    36,    36,    38,    38,    28,
+       6,    10
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,    25,    26,    27,    27,    28,    28,    28,    28,    28,
-      29,    30,    31,    32,    33,    34,    34,    34,    34,    35,
-      35,    35,    36,    36,    36,    37,    37,    37
+       0,    26,    27,    28,    28,    29,    29,    29,    29,    29,
+      30,    31,    32,    33,    34,    35,    35,    35,    35,    36,
+      36,    36,    37,    37,    37,    38,    38,    38
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     3,     1,     1,     1,     1,     1,     1,
+       0,     2,     2,     3,     1,     1,     1,     1,     1,     1,
        5,     5,     3,     2,     2,     3,     3,     3,     1,     3,
        3,     1,     3,     3,     1,     3,     1,     1
 };
@@ -1255,163 +1257,163 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 40 "indent.y" /* yacc.c:1646  */
+#line 41 "indent.y" /* yacc.c:1646  */
     {printf("programa    : stmt-seq\n");}
-#line 1261 "indent.tab.c" /* yacc.c:1646  */
+#line 1263 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 43 "indent.y" /* yacc.c:1646  */
+#line 44 "indent.y" /* yacc.c:1646  */
     {printf("stmt-seq    : stmt-seq TSEM stmt\n");}
-#line 1267 "indent.tab.c" /* yacc.c:1646  */
+#line 1269 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 44 "indent.y" /* yacc.c:1646  */
-    {printf("stmt\n");}
-#line 1273 "indent.tab.c" /* yacc.c:1646  */
+#line 45 "indent.y" /* yacc.c:1646  */
+    {printf("stmt-seq    : stmt\n");}
+#line 1275 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 47 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1279 "indent.tab.c" /* yacc.c:1646  */
+#line 48 "indent.y" /* yacc.c:1646  */
+    {printf("stmt        : if-stmt\n");}
+#line 1281 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 48 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1285 "indent.tab.c" /* yacc.c:1646  */
+#line 49 "indent.y" /* yacc.c:1646  */
+    {printf("stmt        : while-stmt\n");}
+#line 1287 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 49 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1291 "indent.tab.c" /* yacc.c:1646  */
+#line 50 "indent.y" /* yacc.c:1646  */
+    {printf("stmt        : assign-stmt\n");}
+#line 1293 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 50 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1297 "indent.tab.c" /* yacc.c:1646  */
+#line 51 "indent.y" /* yacc.c:1646  */
+    {printf("stmt        : read-stmt\n");}
+#line 1299 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 51 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1303 "indent.tab.c" /* yacc.c:1646  */
+#line 52 "indent.y" /* yacc.c:1646  */
+    {printf("stmt        : write-stmt\n");}
+#line 1305 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 54 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1309 "indent.tab.c" /* yacc.c:1646  */
+#line 55 "indent.y" /* yacc.c:1646  */
+    {printf("if-stmt     : TIF exp TTHEN stmt-seq TENDIF\n");}
+#line 1311 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 57 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1315 "indent.tab.c" /* yacc.c:1646  */
+#line 58 "indent.y" /* yacc.c:1646  */
+    {printf("while-stmt  : TWHILE exp TDO stmt-seq TENDDO\n");}
+#line 1317 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 60 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1321 "indent.tab.c" /* yacc.c:1646  */
+#line 61 "indent.y" /* yacc.c:1646  */
+    {printf("assign-stmt : TID TASSIGN exp\n");}
+#line 1323 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 63 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1327 "indent.tab.c" /* yacc.c:1646  */
+#line 64 "indent.y" /* yacc.c:1646  */
+    {printf("read-stmt   : TREAD TID\n");}
+#line 1329 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 65 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1333 "indent.tab.c" /* yacc.c:1646  */
+#line 67 "indent.y" /* yacc.c:1646  */
+    {printf("write-stmt  : TWRITE exp\n");}
+#line 1335 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 67 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1339 "indent.tab.c" /* yacc.c:1646  */
+#line 70 "indent.y" /* yacc.c:1646  */
+    {printf("exp         : simple-exp TSMA simple-exp\n");}
+#line 1341 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 68 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1345 "indent.tab.c" /* yacc.c:1646  */
+#line 71 "indent.y" /* yacc.c:1646  */
+    {printf("exp         : simple-exp TBIG simple-exp\n");}
+#line 1347 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 69 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1351 "indent.tab.c" /* yacc.c:1646  */
+#line 72 "indent.y" /* yacc.c:1646  */
+    {printf("exp         : simple-exp TEQ simple-exp\n");}
+#line 1353 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 70 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1357 "indent.tab.c" /* yacc.c:1646  */
+#line 73 "indent.y" /* yacc.c:1646  */
+    {printf("exp         : simple-exp\n");}
+#line 1359 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 73 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1363 "indent.tab.c" /* yacc.c:1646  */
+#line 76 "indent.y" /* yacc.c:1646  */
+    {printf("simple-exp  : simple-exp TSUM termo\n");}
+#line 1365 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 74 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1369 "indent.tab.c" /* yacc.c:1646  */
+#line 77 "indent.y" /* yacc.c:1646  */
+    {printf("simple-exp  : simple-exp TSUB termo\n");}
+#line 1371 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 75 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1375 "indent.tab.c" /* yacc.c:1646  */
+#line 78 "indent.y" /* yacc.c:1646  */
+    {printf("simple-exp  : termo\n");}
+#line 1377 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 78 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1381 "indent.tab.c" /* yacc.c:1646  */
+#line 81 "indent.y" /* yacc.c:1646  */
+    {printf("termo       : termo TMUL fator\n");}
+#line 1383 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 79 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1387 "indent.tab.c" /* yacc.c:1646  */
+#line 82 "indent.y" /* yacc.c:1646  */
+    {printf("termo       : termo TDIV fator\n");}
+#line 1389 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 80 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1393 "indent.tab.c" /* yacc.c:1646  */
+#line 83 "indent.y" /* yacc.c:1646  */
+    {printf("termo       : fator\n");}
+#line 1395 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 83 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1399 "indent.tab.c" /* yacc.c:1646  */
+#line 86 "indent.y" /* yacc.c:1646  */
+    {printf("fator       : TOPP exp TCLP\n");}
+#line 1401 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 84 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1405 "indent.tab.c" /* yacc.c:1646  */
+#line 87 "indent.y" /* yacc.c:1646  */
+    {printf("fator       : TNUM\n");}
+#line 1407 "indent.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 85 "indent.y" /* yacc.c:1646  */
-    {printf("\n");}
-#line 1411 "indent.tab.c" /* yacc.c:1646  */
+#line 88 "indent.y" /* yacc.c:1646  */
+    {printf("fator       : TID\n");}
+#line 1413 "indent.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1415 "indent.tab.c" /* yacc.c:1646  */
+#line 1417 "indent.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1639,5 +1641,5 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 88 "indent.y" /* yacc.c:1906  */
+#line 91 "indent.y" /* yacc.c:1906  */
 

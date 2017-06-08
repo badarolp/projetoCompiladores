@@ -45,28 +45,29 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    TIF = 258,
-    TTHEN = 259,
-    TENDIF = 260,
-    TWHILE = 261,
-    TENDWHILE = 262,
-    TDO = 263,
-    TENDDO = 264,
-    TREAD = 265,
-    TWRITE = 266,
-    TSUM = 267,
-    TMUL = 268,
-    TSUB = 269,
-    TDIV = 270,
-    TOPP = 271,
-    TCLP = 272,
-    TSEM = 273,
-    TEQ = 274,
-    TASSIGN = 275,
-    TSMA = 276,
-    TBIG = 277,
-    TNUM = 278,
-    TID = 279
+    TFIM = 258,
+    TIF = 259,
+    TTHEN = 260,
+    TENDIF = 261,
+    TWHILE = 262,
+    TENDWHILE = 263,
+    TDO = 264,
+    TENDDO = 265,
+    TREAD = 266,
+    TWRITE = 267,
+    TSUM = 268,
+    TMUL = 269,
+    TSUB = 270,
+    TDIV = 271,
+    TOPP = 272,
+    TCLP = 273,
+    TSEM = 274,
+    TEQ = 275,
+    TASSIGN = 276,
+    TSMA = 277,
+    TBIG = 278,
+    TNUM = 279,
+    TID = 280
   };
 #endif
 
@@ -78,7 +79,7 @@ union YYSTYPE
 #line 13 "indent.y" /* yacc.c:1909  */
 int num; char id;
 
-#line 82 "indent.tab.h" /* yacc.c:1909  */
+#line 83 "indent.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
