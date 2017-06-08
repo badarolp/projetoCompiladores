@@ -11,6 +11,40 @@
 #  include <math.h>
 #  include "indent.h"
 
+struct ast * mkNode(struct ast *l, int nodetype, struct ast *r) {
+  struct ast *a = malloc(sizeof(struct ast));
+  if(!a) {
+    yyerror("out of space");
+    exit(0);
+  }
+  a->nodetype = nodetype;
+  a->l = l;
+  a->r = r;
+  return a;
+}
+
+struct ast * mkNum(int value) {
+  struct numNode *a = malloc(sizeof(struct numNode));
+  if(!a) {
+    yyerror("out of space");
+    exit(0);
+  }
+  a->nodetype = ANum;
+  a->value = value;
+  return (struct ast *)a;
+}
+
+struct ast * mkId(char * nome) {
+  struct idNode *a = malloc(sizeof(struct idNode));
+  if(!a) {
+    yyerror("out of space");
+    exit(0);
+  }
+  a->nodetype = AId;
+  a->nome = nome;
+  return (struct ast *)a;
+}
+
 const char * indent(struct ast *a) {
 
   char * strLL = "";
@@ -192,59 +226,25 @@ const char * indent(struct ast *a) {
       break;
 
     /* TNUM */
-    case ANum: //- Mudar ID
-      strRoot = ((struct numValue *)a)->v;
+    case ANum:
+      strRoot = ((struct numNode *)a)->value;
       strcat(strReturn, strRoot);
       break;
 
     /* TID */
-    case AId: //- Mudar ID
-      strRoot = ((struct idName *)a)->n;
+    case AId:
+      strRoot = ((struct idNode *)a)->nome;
       strcat(strReturn, strRoot);
       break;
 
-  default: printf("internal error: bad node %c\n", a->nodetype);
+    default:
+      printf("internal error: bad node %c\n", a->nodetype);
   }
   return strReturn;
 }
 
 void treefree(struct ast *a) {
-
-  switch(a->nodetype) {
-
-    /* two subtrees */
-  case '+':
-  case '-':
-  case '*':
-  case '/':
-  case '1':  case '2':  case '3':  case '4':  case '5':  case '6':
-  case 'L':
-    treefree(a->r);
-
-    /* one subtree */
-  case '|':
-  case 'M': case 'C': case 'F':
-    treefree(a->l);
-
-    /* no subtree */
-  case 'K': case 'N':
-    break;
-
-  case '=':
-    free( ((struct symasgn *)a)->v);
-    break;
-
-  case 'I': case 'W':
-    free( ((struct flow *)a)->cond);
-    if( ((struct flow *)a)->tl) free( ((struct flow *)a)->tl);
-    if( ((struct flow *)a)->el) free( ((struct flow *)a)->el);
-    break;
-
-  default: printf("internal error: free bad node %c\n", a->nodetype);
-  }
-
-  free(a); /* always free the node itself */
-
+  //
 }
 
 void yyerror(char *s, ...) {
@@ -257,89 +257,5 @@ void yyerror(char *s, ...) {
 }
 
 int main() {
-  return yyparse();
-}
-
-struct ast * mkNode(struct ast *l, int nodetype, struct ast *r) {
-
-  struct ast *a = malloc(sizeof(struct ast));
-
-  if(!a) {
-    yyerror("out of space");
-    exit(0);
-  }
-
-  a->nodetype = nodetype;
-  a->l = l;
-  a->r = r;
-
-  return a;
-
-}
-
-struct ast * mkId(int value) {
-
-  struct numValue *a = malloc(sizeof(struct numValue));
-
-  if(!a) {
-    yyerror("out of space");
-    exit(0);
-  }
-
-  a->nodetype = AId;
-  a->value = value;
-  return (struct ast *)a;
-}
-
-void treefree(struct ast *a) {
-
-  switch(a->nodetype) {
-
-    /* two subtrees */
-  case '+':
-  case '-':
-  case '*':
-  case '/':
-  case '1':  case '2':  case '3':  case '4':  case '5':  case '6':
-  case 'L':
-    treefree(a->r);
-
-    /* one subtree */
-  case '|':
-  case 'M': case 'C': case 'F':
-    treefree(a->l);
-
-    /* no subtree */
-  case 'K': case 'N':
-    break;
-
-  case '=':
-    free( ((struct symasgn *)a)->v);
-    break;
-
-  case 'I': case 'W':
-    free( ((struct flow *)a)->cond);
-    if( ((struct flow *)a)->tl) free( ((struct flow *)a)->tl);
-    if( ((struct flow *)a)->el) free( ((struct flow *)a)->el);
-    break;
-
-  default: printf("internal error: free bad node %c\n", a->nodetype);
-  }
-
-  free(a); /* always free the node itself */
-
-}
-
-void yyerror(char *s, ...) {
-  va_list ap;
-  va_start(ap, s);
-
-  fprintf(stderr, "%d: error: ", yylineno);
-  vfprintf(stderr, s, ap);
-  fprintf(stderr, "\n");
-}
-
-int main() {
-  printf("> ");
   return yyparse();
 }

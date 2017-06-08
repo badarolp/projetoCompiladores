@@ -36,7 +36,7 @@ void yyerror (char *s);
 %%
 
 programa    : stmt-seq                        {
-                                              indent($1);
+                                              printf("%s",indent($1));
                                               treefree($1);
                                               }
 ;

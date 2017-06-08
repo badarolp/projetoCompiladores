@@ -4,27 +4,6 @@
  */
 /* Declarações */
 
-/*
-#define APrograma 0
-#define AStmtSeq 1
-#define AStmt 2
-#define AIfStmt 3
-#define AWhileStmt 4
-#define AAssignStmt 5
-#define AReadStmt 6
-#define AWriteStmt 7
-#define AExp 8
-#define ASimpleExp 9
-#define ATermo 10
-#define AFator 11
-#define AAssign 12
-#define ARead 13
-#define AWrite 14
-#define APar 15
-#define ANum 16
-#define AId 17
-*/
-
 #define APrograma 0
 #define AIf 1
 #define AWhile 2
@@ -53,7 +32,12 @@ struct idNome {
 };
 
 /* Construir a ast */
-struct ast *newast(struct ast *l, int nodetype, struct ast *r);
+struct ast * mkNode(struct ast *l, int nodetype, struct ast *r);
+struct ast * mkNum(int value);
+struct ast * mkId(char * nome);
+
+/* Identa código*/
+const char * indent(struct ast *a);
 
 /* Deleta e libera a AST */
 void treefree(struct ast *);
