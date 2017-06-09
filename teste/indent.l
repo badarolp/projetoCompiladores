@@ -17,7 +17,6 @@ LETRA       [a-zA-Z]
 
 %%
 
-"\0"                { return TFIM; }
 "--"                { BEGIN(comentario);}
 <comentario>\n      { BEGIN(INITIAL); linhaCount++;}
 <comentario>.       { }

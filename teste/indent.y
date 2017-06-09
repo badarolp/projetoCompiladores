@@ -10,9 +10,22 @@
 #include <stdlib.h>
 %}
 
-%union {int num; char id;}         /* Definições dp yacc */
+%union {struct ast *a; int num; char id;}         /* Definições dp yacc */
 %start programa
-%token TFIM
+
+
+%type <a> stmt-seq
+%type <a> stmt
+%type <a> if-stmt
+%type <a> while-stmt
+%type <a> assign-stmt
+%type <a> read-stmt
+%type <a> write-stmt
+%type <a> exp
+%type <a> simple-exp
+%type <a> termo
+%type <a> fator
+
 %token TIF
 %token TTHEN
 %token TENDIF
@@ -38,54 +51,54 @@
 
 %%
 
-programa    : stmt-seq TFIM                   {printf("programa    : stmt-seq\n");}
+programa    : stmt-seq		                    {printf("ok");}
 ;
 
-stmt-seq    : stmt-seq TSEM stmt          		{printf("stmt-seq    : stmt-seq TSEM stmt\n");}
-            | stmt														{printf("stmt-seq    : stmt\n");}
+stmt-seq    : stmt-seq TSEM stmt              {$$ = mkNode($1, ';', $3);}
+            | stmt
 ;
 
-stmt        : if-stmt													{printf("stmt        : if-stmt\n");}
-            | while-stmt											{printf("stmt        : while-stmt\n");}
-            | assign-stmt											{printf("stmt        : assign-stmt\n");}
-            | read-stmt												{printf("stmt        : read-stmt\n");}
-            | write-stmt											{printf("stmt        : write-stmt\n");}
+stmt        : if-stmt
+            | while-stmt
+            | assign-stmt
+            | read-stmt
+            | write-stmt
 ;
 
-if-stmt     : TIF exp TTHEN stmt-seq TENDIF   {printf("if-stmt     : TIF exp TTHEN stmt-seq TENDIF\n");}
+if-stmt     : TIF exp TTHEN stmt-seq TENDIF   {$$ = mkNode($2, AIf, $4);}
 ;
 
-while-stmt  : TWHILE exp TDO stmt-seq TENDDO  {printf("while-stmt  : TWHILE exp TDO stmt-seq TENDDO\n");}
+while-stmt  : TWHILE exp TDO stmt-seq TENDDO  {$$ = mkNode($2, AWhile, $4);}
 ;
 
-assign-stmt : TID TASSIGN exp                 {printf("assign-stmt : TID TASSIGN exp\n");}
+assign-stmt : TID TASSIGN exp                 {$$ = mkNodeAssign($1, $3);}
 ;
 
-read-stmt   : TREAD TID                       {printf("read-stmt   : TREAD TID\n");}
+read-stmt   : TREAD TID                       {$$ = mkNodeRead($2);}
 ;
 
-write-stmt  : TWRITE exp                      {printf("write-stmt  : TWRITE exp\n");}
+write-stmt  : TWRITE exp                      {$$ = mkNodeWrite($2);}
 ;
 
-exp         : simple-exp TSMA simple-exp      {printf("exp         : simple-exp TSMA simple-exp\n");}
-            | simple-exp TBIG simple-exp      {printf("exp         : simple-exp TBIG simple-exp\n");}
-            | simple-exp TEQ simple-exp       {printf("exp         : simple-exp TEQ simple-exp\n");}
-            | simple-exp											{printf("exp         : simple-exp\n");}
+exp         : simple-exp TSMA simple-exp      {$$ = mkNode($1, '<', $3);}
+            | simple-exp TBIG simple-exp      {$$ = mkNode($1, '>', $3);}
+            | simple-exp TEQ simple-exp       {$$ = mkNode($1, '=', $3);}
+            | simple-exp
 ;
 
-simple-exp  : simple-exp TSUM termo           {printf("simple-exp  : simple-exp TSUM termo\n");}
-            | simple-exp TSUB termo           {printf("simple-exp  : simple-exp TSUB termo\n");}
-            | termo														{printf("simple-exp  : termo\n");}
+simple-exp  : simple-exp TSUM termo           {$$ = mkNode($1, '+', $3);}
+            | simple-exp TSUB termo           {$$ = mkNode($1, '-', $3);}
+            | termo
 ;
 
-termo       : termo TMUL fator                {printf("termo       : termo TMUL fator\n");}
-            | termo TDIV fator                {printf("termo       : termo TDIV fator\n");}
-            | fator														{printf("termo       : fator\n");}
+termo       : termo TMUL fator                {$$ = mkNode($1, '*', $3);}
+            | termo TDIV fator                {$$ = mkNode($1, '/', $3);}
+            | fator
 ;
 
-fator       : TOPP exp TCLP                   {printf("fator       : TOPP exp TCLP\n");}
-            | TNUM                            {printf("fator       : TNUM\n");}
-            | TID                             {printf("fator       : TID\n");}
+fator       : TOPP exp TCLP                   {$$ = mkNodePar($2);}
+            | TNUM                            {$$ = mkNodeNum($1);}
+            | TID                             {$$ = mkNodeId($1);}
 ;
 
 %%
