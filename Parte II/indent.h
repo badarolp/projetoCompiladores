@@ -14,34 +14,59 @@
 #define ANum 7
 #define AId 8
 
-
 struct ast {
   int nodetype;
   struct ast *l;
   struct ast *r;
 };
 
-struct numValue {
+struct astAssign {
   int nodetype;
-  int value;
+  char id;
+  struct ast *exp;
 };
 
-struct idNome {
+struct astRead {
   int nodetype;
-  int nome;
+  char id;
 };
 
-/* Construir a ast */
+struct astWrite {
+ int nodetype;
+ struct ast *exp;
+};
+
+struct astPar {
+ int nodetype;
+ struct ast *exp;
+};
+
+struct astNum {
+  int nodetype;
+  int num;
+};
+
+struct astId {
+  int nodetype;;
+  char id;
+};
+
+const char * teste(struct ast *a);
+
 struct ast * mkNode(struct ast *l, int nodetype, struct ast *r);
-struct ast * mkNum(int value);
-struct ast * mkId(char * nome);
 
-/* Identa código*/
+struct ast * mkNodeAssign(char id, struct ast *exp);
+
+struct ast * mkNodeRead(char id);
+
+struct ast * mkNodeWrite(struct ast *exp);
+
+struct ast * mkNodePar(struct ast *exp);
+
+struct ast * mkNodeNum(int num);
+
+struct ast * mkNodeId(char id);
+
 const char * indent(struct ast *a);
 
-/* Deleta e libera a AST */
-void treefree(struct ast *);
-
-/* interface to the lexer */
-//extern int yylineno; /* from lexer */
-//void yyerror(char *s, ...);
+void yyerror (char *s);

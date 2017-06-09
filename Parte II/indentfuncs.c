@@ -1,52 +1,63 @@
 /* Lucas Pinho Badaró
  * Pedro Ribeiro
- * indent.c
+ * indentfuncs.c
  */
 /* Funções e Main */
 
-#  include <stdio.h>
-#  include <stdlib.h>
-#  include <stdarg.h>
-#  include <string.h>
-#  include <math.h>
-#  include "indent.h"
+#include "indent.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 struct ast * mkNode(struct ast *l, int nodetype, struct ast *r) {
   struct ast *a = malloc(sizeof(struct ast));
-  /*
-  if(!a) {
-    yyerror("out of space");
-    exit(0);
-  }
-  */
   a->nodetype = nodetype;
   a->l = l;
   a->r = r;
   return a;
 }
 
-struct ast * mkNum(int value) {
-  struct numNode *a = malloc(sizeof(struct numNode));
-  /*
-  if(!a) {
-    yyerror("out of space");
-    exit(0);
-  }
-  */
-  a->nodetype = ANum;
-  a->value = value;
-  return (struct ast *)a;
+struct ast * mkNodeAssign(char id, struct ast *exp) {
+  struct astAssign *a = malloc(sizeof(struct astAssign));
+  a->nodetype = AAssign;
+  a->id = id;
+  a->exp = exp;
+  return a;
 }
 
-struct ast * mkId(char * nome) {
-  struct idNode *a = malloc(sizeof(struct idNode));
-  //if(!a) {
-  //  yyerror("out of space");
-  //  exit(0);
-  //}
+struct ast * mkNodeRead(char id) {
+  struct astRead *a = malloc(sizeof(struct astRead));
+  a->nodetype = ARead;
+  a->id = id;
+  return a;
+}
+
+struct ast * mkNodeWrite(struct ast *exp) {
+  struct astWrite *a = malloc(sizeof(struct astWrite));
+  a->nodetype = AWrite;
+  a->exp = exp;
+  return a;
+}
+
+struct ast * mkNodePar(struct ast *exp) {
+  struct astPar *a = malloc(sizeof(struct astPar));
+  a->nodetype = APar;
+  a->exp = exp;
+  return a;
+}
+
+struct ast * mkNodeNum(int num) {
+  struct astNum *a = malloc(sizeof(struct astNum));
+  a->nodetype = ANum;
+  a->num = num;
+  return a;
+}
+
+struct ast * mkNodeId(char id) {
+  struct astId *a = malloc(sizeof(struct astId));
   a->nodetype = AId;
-  a->nome = nome;
-  return (struct ast *)a;
+  a->id = id;
+  return a;
 }
 
 const char * indent(struct ast *a) {
@@ -55,11 +66,9 @@ const char * indent(struct ast *a) {
   char * strRR = "";
   char * strLeft = "";
   char * strRight = "";
-  char * strRoot = ""
+  char * strRoot = "";
   char * strReturn = "";
 
-  //if(!a)
-  //  yyerror("internal error, null eval");
 
   switch(a->nodetype) {
 
@@ -69,6 +78,7 @@ const char * indent(struct ast *a) {
     /* stmt-seq */
     /* stmt-seq TSEM stmt */
     case ';':
+      printf(";");
       strLeft = indent(a->l);
       strRoot = " ; ";
       strRight = indent(a->r);
@@ -113,9 +123,10 @@ const char * indent(struct ast *a) {
     /* assign-stmt */
     /* TID TASSIGN exp */
     case AAssign:
-      strLeft = indent(a->l);
+      printf("AAssign");
+      strLeft = ((struct astAssign *)a)->id;
       strRoot = " := ";
-      strRight = indent(a->r);
+      strRight = indent(((struct astAssign *)a)->exp);
       strcat(strReturn, strLeft);
       strcat(strReturn, strRoot);
       strcat(strReturn, strRight);
@@ -125,8 +136,9 @@ const char * indent(struct ast *a) {
     /* read-stmt */
     /* TREAD TID */
     case ARead:
+      printf("ARead");
       strLeft = "read ";
-      strRight = indent(a->l);
+      strRight = ((struct astRead *)a)->id;
       strcat(strReturn, strLeft);
       strcat(strReturn, strRight);
       break;
@@ -134,19 +146,21 @@ const char * indent(struct ast *a) {
 
     /* write-stmt */
     /* TWRITE exp */
-    case AWhile:
+    case AWrite:
+      printf("AWrite");
       strLeft = "write ";
-      strRight = indent(a->l);
+      strRight = indent(((struct astWrite *)a)->exp);
       strcat(strReturn, strLeft);
       strcat(strReturn, strRight);
       break;
+
 
 
     /* exp */
     /* simple-exp TSMA simple-exp */
     case '<':
       strLeft = indent(a->l);
-      strRoot = " < ";
+      strRoot = '<';
       strRight = indent(a->r);
       strcat(strReturn, strLeft);
       strcat(strReturn, strRoot);
@@ -156,7 +170,7 @@ const char * indent(struct ast *a) {
     /* simple-exp TBIG simple-exp */
     case '>':
       strLeft = indent(a->l);
-      strRoot = " > ";
+      strRoot = '>';
       strRight = indent(a->r);
       strcat(strReturn, strLeft);
       strcat(strReturn, strRoot);
@@ -166,19 +180,18 @@ const char * indent(struct ast *a) {
     /* simple-exp TEQ simple-exp */
     case '=':
       strLeft = indent(a->l);
-      strRoot = " = ";
+      strRoot = '=';
       strRight = indent(a->r);
       strcat(strReturn, strLeft);
       strcat(strReturn, strRoot);
       strcat(strReturn, strRight);
       break;
 
-
     /* simple-exp */
     /* simple-exp TSUM termo */
     case '+':
       strLeft = indent(a->l);
-      strRoot = " + ";
+      strRoot = '+';
       strRight = indent(a->r);
       strcat(strReturn, strLeft);
       strcat(strReturn, strRoot);
@@ -188,19 +201,18 @@ const char * indent(struct ast *a) {
     /* simple-exp TSUB termo */
     case '-':
       strLeft = indent(a->l);
-      strRoot = " - ";
+      strRoot = '-';
       strRight = indent(a->r);
       strcat(strReturn, strLeft);
       strcat(strReturn, strRoot);
       strcat(strReturn, strRight);
       break;
 
-
     /* termo */
     /* simple-exp TMUL fator */
     case '*':
       strLeft = indent(a->l);
-      strRoot = " * ";
+      strRoot = '*';
       strRight = indent(a->r);
       strcat(strReturn, strLeft);
       strcat(strReturn, strRoot);
@@ -210,7 +222,7 @@ const char * indent(struct ast *a) {
     /* simple-exp TDIV fator */
     case '/':
       strLeft = indent(a->l);
-      strRoot = " / ";
+      strRoot = '/';
       strRight = indent(a->r);
       strcat(strReturn, strLeft);
       strcat(strReturn, strRoot);
@@ -222,7 +234,7 @@ const char * indent(struct ast *a) {
     /* TOPP exp TCLP */
     case APar:
       strLeft = "(";
-      strRoot = indent(a->l);
+      strRoot = indent(((struct astPar *)a)->exp);
       strRight = ")";
       strcat(strReturn, strLeft);
       strcat(strReturn, strRoot);
@@ -231,13 +243,13 @@ const char * indent(struct ast *a) {
 
     /* TNUM */
     case ANum:
-      strRoot = ((struct numNode *)a)->value;
+      strRoot = ((struct astNum *)a)->num;
       strcat(strReturn, strRoot);
       break;
 
     /* TID */
     case AId:
-      strRoot = ((struct idNode *)a)->nome;
+      strRoot = ((struct astId *)a)->id;
       strcat(strReturn, strRoot);
       break;
 
@@ -247,21 +259,19 @@ const char * indent(struct ast *a) {
   return strReturn;
 }
 
-void treefree(struct ast *a) {
-  //
-}
+void yyerror (char *s) {fprintf (stderr, "%s\n", s);}
 
-/*
-void yyerror(char *s, ...) {
-  va_list ap;
-  va_start(ap, s);
-
-  fprintf(stderr, "%d: error: ", yylineno);
-  vfprintf(stderr, s, ap);
-  fprintf(stderr, "\n");
-}
-*/
-
-int main() {
+int main (int argc, char *argv[]) {
+  /*
+  char *file_contents;
+  long input_file_size;
+  FILE *input_file = fopen("fat.t", "rb");
+  fseek(input_file, 0, SEEK_END);
+  input_file_size = ftell(input_file);
+  rewind(input_file);
+  file_contents = malloc(input_file_size * (sizeof(char)));
+  fread(file_contents, sizeof(char), input_file_size, input_file);
+  fclose(input_file);
+  */
   return yyparse();
 }

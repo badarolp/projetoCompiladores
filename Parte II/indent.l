@@ -4,10 +4,8 @@
  */
 /* Reconhece tokens */
 
-%option noyywrap nodefault yylineno
 %{
-# include "indent.h"
-# include "indent.tab.h"
+#include "indent.tab.h"
 int linhaCount = 1;
 %}
 %x comentario
@@ -15,6 +13,7 @@ int linhaCount = 1;
 LINHA       \n
 DIGITO      [0-9]
 LETRA       [a-zA-Z]
+
 
 %%
 
@@ -36,9 +35,9 @@ write               { return TWRITE;}
 "*"                 { return TMUL;}
 "-"                 { return TSUB;}
 "/"                 { return TDIV;}
-{DIGITO}+{LETRA}+   { printf("ERRO NA LINHA %d (IDENTIFICADOR %s MAL FORMADO)\n_________________________________\n", linhaCount,yytext);}
-{LETRA}[a-zA-Z0-9]* { yylval.idVal = yytext[0]; return TID;}
-{DIGITO}+           { yylval.numVal = atoi(yytext); return TNUM;}
+{DIGITO}+{LETRA}+   { yyerror("ERRO NA LINHA %d (IDENTIFICADOR %s MAL FORMADO)\n_________________________________\n", linhaCount,yytext);}
+{LETRA}[a-zA-Z0-9]* { yylval.id = yytext[0]; return TID;}
+{DIGITO}+           { yylval.num = atoi(yytext); return TNUM;}
 "("                 { return TOPP;}
 ")"                 { return TCLP;}
 ";"                 { return TSEM;}
@@ -46,7 +45,7 @@ write               { return TWRITE;}
 ":="                { return TASSIGN;}
 "<"                 { return TSMA;}
 ">"                 { return TBIG;}
-.                   { printf("ERRO NA LINHA: %d SÍMBOLO %s DESCONHECIDO\n_________________________________\n",linhaCount,yytext);}
+.                   { yyerror("ERRO NA LINHA: %d SÍMBOLO %s DESCONHECIDO\n_________________________________\n",linhaCount,yytext);}
 
 %%
 

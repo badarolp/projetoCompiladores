@@ -13,7 +13,6 @@
 %union {struct ast *a; int num; char id;}         /* Definições dp yacc */
 %start programa
 
-
 %type <a> stmt-seq
 %type <a> stmt
 %type <a> if-stmt
@@ -51,7 +50,7 @@
 
 %%
 
-programa    : stmt-seq		                    {printf("ok");}
+programa    : stmt-seq		                    {printf(indent($1));}
 ;
 
 stmt-seq    : stmt-seq TSEM stmt              {$$ = mkNode($1, ';', $3);}

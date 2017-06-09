@@ -51,6 +51,8 @@ struct astId {
   char id;
 };
 
+const char * teste(struct ast *a);
+
 struct ast * mkNode(struct ast *l, int nodetype, struct ast *r);
 
 struct ast * mkNodeAssign(char id, struct ast *exp);
@@ -64,5 +66,7 @@ struct ast * mkNodePar(struct ast *exp);
 struct ast * mkNodeNum(int num);
 
 struct ast * mkNodeId(char id);
+
+const char * indent(struct ast *a);
 
 void yyerror (char *s);
